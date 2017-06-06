@@ -71,3 +71,5 @@ $ ansible-playbook -i contrib/ec2.py -u centos --private-key ~/.ssh/aws_rsa play
 ```
 
 在`playbook`中就可以使用`tag_Name_database`这些`key`作为主机名，来执行任务。
+
+当使用`浮动inventory`的时候，由于没有`local`主机的配置，`playbook`中`local`的操作都会被跳过。这个算是副作用吗？
