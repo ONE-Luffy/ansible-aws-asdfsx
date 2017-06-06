@@ -6,8 +6,9 @@
     - ec2
   tags: bootstrap
 
-- hosts: local
+- hosts: tag_Name_database
+  user: centos
   roles:
     - mysql
     - postgresql
-  tags: install database
+  tags: install_database

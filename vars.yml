@@ -14,6 +14,12 @@ vpc_cidr_block: "10.0.0.0/16"
 # For Security Group Rule
 my_ip:          "10.2.3.4"
 
+key_name: "example"
+key_files: "~/.ssh/aws_rsa"
+
+database_user: "root"
+database_passwd: "root"
+
 # Subnets
 public_subnet_1_cidr:  "10.0.0.0/24"
 
@@ -46,13 +52,14 @@ security_group:
 ec2_instances:
   - image: ami-0c2aba6c
     instance_type: t2.nano
-    group: ssh_enable
+    group: ssh_enable,mysql,postgres
     instance_tags: 
-        Name: hadoop_dev
+        Name: database
     exact_count: 1
     count_tag: 
-        Name: hadoop_dev
+        Name: database
     vpc_subnet_id: "{{ public_subnet_id }}"
     region: "{{ aws_region }}"
     ec2_url: "{{ aws_ec2_url }}"
     assign_public_ip: yes
+    key_name: "{{ key_name }}"

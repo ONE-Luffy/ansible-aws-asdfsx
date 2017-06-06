@@ -1,4 +1,51 @@
 ---
 
 # roles/postgresql/tasks/main.yml
--
+
+- name: install postgresql
+  become: yes
+  become_method : sudo
+  become_user: root
+  command: yum install -y postgresql-server
+
+- name: add postgresql db user
+  become: yes
+  become_method : sudo
+  become_user: postgres
+  command: yum install -y postgresql-server postgresql-contrib
+
+- name: add postgresql db user
+  become: yes
+  become_method : sudo
+  become_user: root
+  command: postgresql-setup initdb
+
+- name: config postgres postgresql.conf
+  become: yes
+  become_method : sudo
+  become_user: root
+  command: sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /var/lib/pgsql/data/postgresql.conf
+
+- name: config postgres pg_hba.conf
+  become: yes
+  become_method : sudo
+  become_user: root
+  shell: echo "host    all             all             0.0.0.0/0               trust" >> /var/lib/pgsql/data/pg_hba.conf
+    
+- name: restart postgresql
+  become: yes
+  become_method : sudo
+  become_user: root
+  command: systemctl restart postgresql
+
+- name: create database user
+  become: true
+  become_method : sudo
+  become_user: postgres
+  command: createuser {{database_user}} --superuser
+  
+- name: create database for database user
+  become: true
+  become_method : sudo
+  become_user: postgres
+  command: createdb -O {{database_user}} {{database_user}}

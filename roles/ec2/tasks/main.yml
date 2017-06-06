@@ -2,6 +2,20 @@
 
 # roles/ec2/tasks/main.yml
 
+
+# Creates a new ec2 key pair named `example` if not present using provided key
+# material
+- name: create an new key pair
+  command: ssh-keygen -t rsa -f {{ key_files }} -N '' -C '{{ key_name }}' creates={{ key_files }}
+
+- name: example ec2 key
+  ec2_key:
+    region:            "{{ aws_region }}"
+    ec2_url:           "{{ aws_ec2_url }}"
+    name: "{{ key_name }}"
+    key_material: "{{ item }}"
+  with_file: "{{ key_files }}.pub"
+
 - name: create instance
   ec2:
     image:             "{{ item.image }}"
@@ -14,6 +28,7 @@
     region:            "{{ item.region }}"
     ec2_url:           "{{ item.ec2_url }}"
     assign_public_ip:  "{{ item.assign_public_ip }}"
+    key_name:          "{{ item.key_name }}"
   with_items:
     "{{ ec2_instances }}"
   register: ec2
