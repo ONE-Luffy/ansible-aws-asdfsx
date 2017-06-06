@@ -5,3 +5,9 @@
     - vpc
     - ec2
   tags: bootstrap
+
+- hosts: local
+  roles:
+    - mysql
+    - postgresql
+  tags: install database
