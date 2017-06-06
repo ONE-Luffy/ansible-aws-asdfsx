@@ -1,0 +1,15 @@
+---
+
+# roles/mysql/tasks/main.yml
+
+- name: install mariadb
+  command: yum install -y mariadb-server
+
+- name: restart mysql
+  command: systemctl restart mariadb
+
+- name: create remote user
+  command: mysql -e "CREATE USER '{{remote_user}}'@'%' IDENTIFIED BY '{{remote_user_passwd}}';"
+
+- name: grant privillage
+  command: mysql -e "GRANT all ON *.* TO '{{remote_user}}'@'%' IDENTIFIED by '{{remote_user_passwd}}';"
