@@ -1,58 +1,42 @@
 ---
+- name: Fail play if the cluster tag Name is not defined
+  fail:
+    msg: "Specify 'Name' for the cluster in tag_key_vals variable"
+  when: tag_key_vals.Name is undefined
+  tags: ["launch"]
 
-# roles/ec2/tasks/main.yml
+- name: Fail play if the action name is not defined
+  fail: 
+    msg: "Specify the action name: -e 'action=launch'"
+  when: action is undefined
+  tags: ["keypair", "launch", "start", "stop", terminate", "describe"]
 
+- name: Create KeyPair
+  include: keypair.yml
+  when: action == "keypair"
+  tags: ['keypair']
 
-# Creates a new ec2 key pair named `example` if not present using provided key
-# material
-- name: create an new key pair
-  command: ssh-keygen -t rsa -f {{ key_files }} -N '' -C '{{ key_name }}' creates={{ key_files }}
+- name: Launch EC2 instances
+  include: launch.yml
+  when: action == "launch"
+  tags: ['launch']
 
-- name: example ec2 key
-  ec2_key:
-    region:            "{{ aws_region }}"
-    ec2_url:           "{{ aws_ec2_url }}"
-    name: "{{ key_name }}"
-    key_material: "{{ item }}"
-  with_file: "{{ key_files }}.pub"
+- name: Start stopped EC2 instances
+  include: start.yml
+  when: action == "start"
+  tags: ['start']
 
-- name: create instance
-  ec2:
-    image:             "{{ item.image }}"
-    instance_type:     "{{ item.instance_type }}"
-    group:             "{{ item.group }}"
-    instance_tags:     "{{ item.instance_tags }}"
-    exact_count:       "{{ item.exact_count }}"
-    count_tag:         "{{ item.count_tag }}"
-    vpc_subnet_id:     "{{ item.vpc_subnet_id }}"
-    region:            "{{ item.region }}"
-    ec2_url:           "{{ item.ec2_url }}"
-    assign_public_ip:  "{{ item.assign_public_ip }}"
-    key_name:          "{{ item.key_name }}"
-  with_items:
-    "{{ ec2_instances }}"
-  register: ec2
+- name: Stop EC2 instances
+  include: stop.yml
+  when: action == "stop"
+  tags: ['stop']
 
-- debug: var=ec2
+- name: Terminate EC2 instances
+  include: terminate.yml
+  when: action == "terminate"
+  tags: ['terminate']
 
-- name: Add new instance to host group
-  add_host:
-    hostname: "{{ item.public_ip }}"
-    groupname: launched
-  with_items: "{{ ec2.results[0].instances }}"
-
-- name: Wait for SSH to come up
-  wait_for:
-    host: "{{ item.public_dns_name }}"
-    port: 22
-    delay: 60
-    timeout: 320
-    state: started
-  with_items: "{{ ec2.results[0].instances }}"
-
-#- name: Terminate instances that were previously launched
-#  ec2:
-#    region: "{{ aws_region }}"
-#    ec2_url: "{{ aws_ec2_url }}"
-#    state: 'absent'
-#    instance_ids: '{{ ec2.results[0].instance_ids }}'
+- name: Describe EC2 instances info
+  include: describe.yml
+  when: action == "describe"
+  tags: ['describe']

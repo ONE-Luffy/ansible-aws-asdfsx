@@ -31,6 +31,12 @@
   become_method : sudo
   become_user: root
   shell: echo "host    all             all             0.0.0.0/0               trust" >> /var/lib/pgsql/data/pg_hba.conf
+
+- name: enable postgresql
+  become: yes
+  become_method : sudo
+  become_user: root
+  command: systemctl enable postgresql
     
 - name: restart postgresql
   become: yes

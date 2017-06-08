@@ -83,13 +83,13 @@
 
 - debug: var=my_vpc_group
 
-- name:                    Create Empty Security Group ID List
+- name:                   Create Empty Security Group ID List
   set_fact:
     security_group_ids: []
 
-- name:                    Put Security Group ID Into The List
+- name:                   Put Security Group ID Into The List
   set_fact:
-    security_group_ids: "{{ security_group_ids }} + ['{{ item.group_id }}']" 
+    security_group_ids:   "{{ security_group_ids }} + ['{{ item.group_id }}']" 
   when:
     "item.group_name != 'default'"
   with_items:
@@ -141,13 +141,13 @@
 
 - name:                   Delete VPC`s Subnet
   ec2_vpc_subnet:
-    region:           "{{ aws_region }}"
-    aws_access_key:   "{{ aws_access_key }}"
-    aws_secret_key:   "{{ aws_secret_key }}"
-    vpc_id:           "{{ vpc_id }}"
-    cidr:             "{{ public_subnet_1_cidr }}"
-    az:               "{{ aws_region }}a"
-    state:            "absent"
+    region:               "{{ aws_region }}"
+    aws_access_key:       "{{ aws_access_key }}"
+    aws_secret_key:       "{{ aws_secret_key }}"
+    vpc_id:               "{{ vpc_id }}"
+    cidr:                 "{{ public_subnet_1_cidr }}"
+    az:                   "{{ aws_region }}a"
+    state:                "absent"
   with_items:
     "{{ subnet_ids }}"
 

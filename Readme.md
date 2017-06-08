@@ -12,7 +12,7 @@ export AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXX
 $ ansible-playbook playbook.yml -i inventory -e @vars.yml
 ```
 
-`ec2`模块的实际返回结果，和官方示例不太一样，根据需要做修改。
+`ec2`模块的实际返回结果，和官方示例不太一样，根据需要做修改。可能是因为使用了 with_items 进行循环导致的。
 
 目前启动`ec2`实例使用的是`centos`官方的镜像，登录时的用户是`centos`
 
@@ -73,3 +73,8 @@ $ ansible-playbook -i contrib/ec2.py -u centos --private-key ~/.ssh/aws_rsa play
 在`playbook`中就可以使用`tag_Name_database`这些`key`作为主机名，来执行任务。
 
 当使用`浮动inventory`的时候，由于没有`local`主机的配置，`playbook`中`local`的操作都会被跳过。这个算是副作用吗？
+
+接下来，打算按照下边文章所使用的 playbook 进行下改造
+https://blog.insightdatascience.com/ansible-playbooks-for-kafka-and-zookeeper-with-ec2-dynamic-inventory-8f317d4d2bfc
+
+https://github.com/InsightDataScience/ansible-playbook
