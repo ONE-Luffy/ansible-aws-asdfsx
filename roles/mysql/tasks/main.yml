@@ -2,26 +2,28 @@
 
 # roles/mysql/tasks/main.yml
 
-- name: install mariadb
-  become: yes
-  become_method : sudo
-  become_user: root
-  command: yum install -y mariadb-server
+- name: Install mysql if not installed
+  yum:
+    name: mariadb-server
+    state: present
+  tags: ['start', 'stop', 'restart', 'add_remote_user']
 
-#- name: restart mysql
-#  become: yes
-#  become_method : sudo
-#  become_user: root
-#  command: systemctl restart mariadb
+- name: Start mysql
+  include: start.yml
+  when: action == "start"
+  tags: ['start']
 
-#- name: create remote user
-#  become: yes
-#  become_method : sudo
-#  become_user: root
-#  command: mysql -e "CREATE USER '{{database_user}}'@'%' IDENTIFIED BY '{{database_passwd}}';"
+- name: Stop mysql
+  include: stop.yml
+  when: action == "stop"
+  tags: ['stop']
 
-#- name: grant privillage
-#  become: yes
-#  become_method : sudo
-#  become_user: root
-#  command: mysql -e "GRANT all ON *.* TO '{{database_user}}'@'%' IDENTIFIED by '{{database_passwd}}';"
+- name: Restart mysql
+  include: restart.yml
+  when: action == "restart"
+  tags: ['restart']
+
+- name: add remote user to mysql
+  include: add_remote_user.yml
+  when: action == "add_remote_user"
+  tags: ['add_remote_user']

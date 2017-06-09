@@ -1,0 +1,7 @@
+---
+
+- name: create remote user
+  command: mysql -e "CREATE USER '{{database_user}}'@'%' IDENTIFIED BY '{{database_passwd}}';"
+
+- name: grant privillage
+  command: mysql -e "GRANT all ON *.* TO '{{database_user}}'@'%' IDENTIFIED by '{{database_passwd}}';"
