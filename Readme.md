@@ -74,7 +74,9 @@ $ ansible-playbook -i contrib/ec2.py -u centos --private-key ~/.ssh/aws_rsa play
 
 当使用`浮动inventory`的时候，由于没有`local`主机的配置，`playbook`中`local`的操作都会被跳过。这个算是副作用吗？
 
-接下来，打算按照下边文章所使用的 playbook 进行下改造
-https://blog.insightdatascience.com/ansible-playbooks-for-kafka-and-zookeeper-with-ec2-dynamic-inventory-8f317d4d2bfc
 
+
+参考资料：
+http://jeremievallee.com/2016/07/27/aws-vpc-ansible/
+https://blog.insightdatascience.com/ansible-playbooks-for-kafka-and-zookeeper-with-ec2-dynamic-inventory-8f317d4d2bfc
 https://github.com/InsightDataScience/ansible-playbook
