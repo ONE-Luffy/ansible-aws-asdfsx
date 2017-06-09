@@ -1,18 +1,18 @@
 ---
 
 # roles/vpc/tasks/main.yml
-- name: Fail play if the action name is not defined
+- name: Fail play if the acname name is not defined
   fail: 
-    msg: "Specify the action name: -e 'action=launch'"
-  when: action is undefined
+    msg: "Specify the acname name: -e 'acname=launch'"
+  when: acname is undefined
   tags: ["launch", "terminate"]
 
 - name: Launch VPC instances
   include: launch.yml
-  when: action == "launch"
+  when: acname == "launch"
   tags: ["launch"]
 
 - name: Terminate VPC instances
   include: terminate.yml
-  when: action == "terminate"
+  when: acname == "terminate"
   tags: ["terminate"]

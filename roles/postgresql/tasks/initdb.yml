@@ -2,3 +2,5 @@
 
 - name: init db
   command: postgresql-setup initdb
+
+  

@@ -5,38 +5,38 @@
   when: tag_key_vals.Name is undefined
   tags: ["launch"]
 
-- name: Fail play if the action name is not defined
+- name: Fail play if the acname name is not defined
   fail: 
-    msg: "Specify the action name: -e 'action=launch'"
-  when: action is undefined
+    msg: "Specify the acname name: -e 'acname=launch'"
+  when: acname is undefined
   tags: ["keypair", "launch", "start", "stop", terminate", "describe"]
 
 - name: Create KeyPair
   include: keypair.yml
-  when: action == "keypair"
+  when: acname == "keypair"
   tags: ['keypair']
 
 - name: Launch EC2 instances
   include: launch.yml
-  when: action == "launch"
+  when: acname == "launch"
   tags: ['launch']
 
 - name: Start stopped EC2 instances
   include: start.yml
-  when: action == "start"
+  when: acname == "start"
   tags: ['start']
 
 - name: Stop EC2 instances
   include: stop.yml
-  when: action == "stop"
+  when: acname == "stop"
   tags: ['stop']
 
 - name: Terminate EC2 instances
   include: terminate.yml
-  when: action == "terminate"
+  when: acname == "terminate"
   tags: ['terminate']
 
 - name: Describe EC2 instances info
   include: describe.yml
-  when: action == "describe"
+  when: acname == "describe"
   tags: ['describe']

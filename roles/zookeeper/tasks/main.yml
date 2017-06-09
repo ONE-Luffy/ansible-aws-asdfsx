@@ -13,14 +13,14 @@
   tags: install
   when: 
     - zoo.stat.exists == False
-    - action == "install"
+    - acname == "install"
 
 - name: Configure Zookeeper
   include: configure.yml
   tags: ["install", "configure"]
   when:
     - zoo.stat.exists == False
-    - action in ["install", "configure"]
+    - acname in ["install", "configure"]
 
 - name: Fail play if Zookeeper is not installed
   fail:
@@ -28,26 +28,26 @@
   tags: ['start', 'stop', 'uninstall', 'info']
   when: 
     - zoo.stat.exists == False
-    - action in ['start', 'stop', 'uninstall', 'info']
+    - acname in ['start', 'stop', 'uninstall', 'info']
 
 - name: Start zookeeper
   include: start.yml
   tags: start
-  when: action =="start"
+  when: acname =="start"
 
 - name: Stop zookeeper
   include: stop.yml
   tags: ['stop', 'uninstall']
-  when: action in ['stop', 'uninstall']
+  when: acname in ['stop', 'uninstall']
 
 - name: Uninstall zookeeper
   include: uninstall.yml
   tags: uninstall
   when: 
     - zoo.stat.exists == True
-    - action == "uninstall"
+    - acname == "uninstall"
 
 - name: Zookeeper info
   include: info.yml
   tags: info
-  when: action == "info"
+  when: acname == "info"

@@ -7,6 +7,6 @@ https://acloud.guru/forums/aws-certified-solutions-architect-associate/discussio
 
 使用方法
 ```
-$ ansible-playbook -i inventory vpc.yml -e "vars_file=./vpc_vars.yml" -e 'action=launch' --tags launch
-$ ansible-playbook -i inventory vpc.yml -e "vars_file=./vpc_vars.yml" -e 'action=terminate' --tags terminate
+$ ansible-playbook -i inventory vpc.yml -e "vars_file=./vpc_vars.yml" -e 'acname=launch' --tags launch
+$ ansible-playbook -i inventory vpc.yml -e "vars_file=./vpc_vars.yml" -e 'acname=terminate' --tags terminate
 ```

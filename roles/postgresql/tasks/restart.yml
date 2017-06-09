@@ -1,4 +1,4 @@
 ---
 
-- name: restart mysql
-  command: systemctl restart mariadb
+- name: restart postgresql
+  command: systemctl restart postgresql

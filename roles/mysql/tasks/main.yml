@@ -10,20 +10,30 @@
 
 - name: Start mysql
   include: start.yml
-  when: action == "start"
+  when: acname == "start"
   tags: ['start']
 
 - name: Stop mysql
   include: stop.yml
-  when: action == "stop"
+  when: acname == "stop"
   tags: ['stop']
 
 - name: Restart mysql
   include: restart.yml
-  when: action == "restart"
+  when: acname == "restart"
   tags: ['restart']
 
 - name: add remote user to mysql
   include: add_remote_user.yml
-  when: action == "add_remote_user"
+  when: acname == "add_remote_user"
   tags: ['add_remote_user']
+
+- name: Enable mysql
+  include: enable.yml
+  when: acname == "enable"
+  tags: ['enable']
+
+- name: Disable mysql
+  include: disable.yml
+  when: acname == "disable"
+  tags: ['disable']

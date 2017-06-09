@@ -4,35 +4,35 @@
 
 - name: Install postgresql
   include: install.yml
-  when: action == "install"
+  when: acname == "install"
   tags: ['install']
 
 - name: Start postgresql
   include: start.yml
-  when: action == "start"
+  when: acname == "start"
   tags: ['start']
 
 - name: Stop postgresql
   include: stop.yml
-  when: action == "stop"
+  when: acname == "stop"
   tags: ['stop']
 
 - name: Restart postgresql
   include: restart.yml
-  when: action == "restart"
+  when: acname == "restart"
   tags: ['restart']
 
 - name: Enable postgresql
   include: enable.yml
-  when: action == "enable"
+  when: acname == "enable"
   tags: ['enable']
 
 - name: Disable postgresql
   include: disable.yml
-  when: action == "disable"
+  when: acname == "disable"
   tags: ['disable']
 
 - name: add remote user to postgresql
   include: add_remote_user.yml
-  when: action == "add_remote_user"
+  when: acname == "add_remote_user"
   tags: ['add_remote_user']
