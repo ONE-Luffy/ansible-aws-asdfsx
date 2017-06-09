@@ -2,56 +2,37 @@
 
 # roles/postgresql/tasks/main.yml
 
-- name: install postgresql
-  become: yes
-  become_method : sudo
-  become_user: root
-  command: yum install -y postgresql-server
+- name: Install postgresql
+  include: install.yml
+  when: action == "install"
+  tags: ['install']
 
-- name: add postgresql db user
-  become: yes
-  become_method : sudo
-  become_user: postgres
-  command: yum install -y postgresql-server postgresql-contrib
+- name: Start postgresql
+  include: start.yml
+  when: action == "start"
+  tags: ['start']
 
-- name: add postgresql db user
-  become: yes
-  become_method : sudo
-  become_user: root
-  command: postgresql-setup initdb
+- name: Stop postgresql
+  include: stop.yml
+  when: action == "stop"
+  tags: ['stop']
 
-- name: config postgres postgresql.conf
-  become: yes
-  become_method : sudo
-  become_user: root
-  command: sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /var/lib/pgsql/data/postgresql.conf
+- name: Restart postgresql
+  include: restart.yml
+  when: action == "restart"
+  tags: ['restart']
 
-- name: config postgres pg_hba.conf
-  become: yes
-  become_method : sudo
-  become_user: root
-  shell: echo "host    all             all             0.0.0.0/0               trust" >> /var/lib/pgsql/data/pg_hba.conf
+- name: Enable postgresql
+  include: enable.yml
+  when: action == "enable"
+  tags: ['enable']
 
-- name: enable postgresql
-  become: yes
-  become_method : sudo
-  become_user: root
-  command: systemctl enable postgresql
-    
-- name: restart postgresql
-  become: yes
-  become_method : sudo
-  become_user: root
-  command: systemctl restart postgresql
+- name: Disable postgresql
+  include: disable.yml
+  when: action == "disable"
+  tags: ['disable']
 
-- name: create database user
-  become: true
-  become_method : sudo
-  become_user: postgres
-  command: createuser {{database_user}} --superuser
-  
-- name: create database for database user
-  become: true
-  become_method : sudo
-  become_user: postgres
-  command: createdb -O {{database_user}} {{database_user}}
+- name: add remote user to postgresql
+  include: add_remote_user.yml
+  when: action == "add_remote_user"
+  tags: ['add_remote_user']
