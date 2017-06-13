@@ -1,0 +1,6 @@
+---
+
+- name: Create SNS Topic
+  include: create.yml
+  when: acname == "create"
+  tags: ['create']
