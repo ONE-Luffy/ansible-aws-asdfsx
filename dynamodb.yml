@@ -1,10 +1,10 @@
 ---
 
-- name: Execute SNS roles
+- name: Execute Dynamodb Role
   hosts: localhost
   connection: local
   gather_facts: False
   vars_files:
     - "{{ vars_file }}"
   roles:
-    - sns
+    - dynamodb
