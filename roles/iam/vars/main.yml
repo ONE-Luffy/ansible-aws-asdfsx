@@ -1,6 +1,6 @@
 region:     "us-west-2"
 ec2_url:    "http://ec2.us-west-2.amazonaws.com" 
-accountid:  ""
+accountid:  "451299163191"
 
 dynamodb_table: "asdfsx_test_dynamodb"
 

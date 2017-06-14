@@ -23,7 +23,7 @@
                 "dynamodb:GetShardIterator",
                 "dynamodb:ListStreams"
             ],
-            "Resource": "arn:aws:dynamodb:{{ region }}:{{ accountid }}:table/BarkTable/stream/*"
+            "Resource": "arn:aws:dynamodb:{{ region }}:{{ accountid }}:table/{{ dynamodb_table }}/stream/*"
         },
         {
             "Effect": "Allow",
