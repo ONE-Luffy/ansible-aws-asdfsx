@@ -26,3 +26,16 @@ ec2_instances:
     ec2_url: "{{ ec2_url }}"
     assign_public_ip: yes
     key_name: "{{ key_name }}"
+  - image: ami-7172b611
+    instance_type: t2.nano
+    group: ssh_enable,mysql,postgres
+    instance_tags:
+        Name: "lambda develop"
+    exact_count: 1
+    count_tag:
+        Name: develop
+    vpc_subnet_id: "{{ subnet_id }}"
+    region: "{{ region }}"
+    ec2_url: "{{ ec2_url }}"
+    assign_public_ip: yes
+    key_name: "{{ key_name }}"
