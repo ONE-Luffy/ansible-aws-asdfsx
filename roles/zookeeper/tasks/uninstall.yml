@@ -12,6 +12,6 @@
 
 - name: Delete zookeeper log dir
   file:
-    path: "{{ ZOOKEEPER_HOME }}"
+    path: "{{ ZOOKEEPER_LOG_DIR }}"
     state: absent
     owner: root

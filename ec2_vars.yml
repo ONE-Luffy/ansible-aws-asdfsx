@@ -13,7 +13,7 @@ tag_key_vals:
 ec2_instances:
   - image: ami-0c2aba6c
     instance_type: t2.nano
-    group: ssh_enable,mysql,postgres
+    group: default,ssh_enable,mysql,postgres
     instance_tags: 
         Name: "{{ tag_key_vals.Name }}"
         class: database
@@ -26,16 +26,49 @@ ec2_instances:
     ec2_url: "{{ ec2_url }}"
     assign_public_ip: yes
     key_name: "{{ key_name }}"
-  - image: ami-7172b611
-    instance_type: t2.nano
-    group: ssh_enable,mysql,postgres
-    instance_tags:
-        Name: "lambda develop"
-    exact_count: 1
-    count_tag:
-        Name: develop
+
+  - image: ami-0c2aba6c
+    instance_type: t2.medium
+    group: default,ssh_enable
+    instance_tags: 
+        Name: "{{ tag_key_vals.Name }}"
+        class: hadoop
+        class2: namenode
+    exact_count: 2
+    count_tag: 
+        Name: hadoop
     vpc_subnet_id: "{{ subnet_id }}"
     region: "{{ region }}"
     ec2_url: "{{ ec2_url }}"
     assign_public_ip: yes
     key_name: "{{ key_name }}"
+
+  - image: ami-0c2aba6c
+    instance_type: t2.medium
+    group: default,ssh_enable
+    instance_tags: 
+        Name: "{{ tag_key_vals.Name }}"
+        class: hadoop
+        class2: datanode
+    exact_count: 2
+    count_tag: 
+        Name: hadoop
+    vpc_subnet_id: "{{ subnet_id }}"
+    region: "{{ region }}"
+    ec2_url: "{{ ec2_url }}"
+    assign_public_ip: yes
+    key_name: "{{ key_name }}"
+
+#  - image: ami-7172b611
+#    instance_type: t2.nano
+#    group: ssh_enable,mysql,postgres
+#    instance_tags:
+#        Name: "lambda develop"
+#    exact_count: 1
+#    count_tag:
+#        Name: develop
+#    vpc_subnet_id: "{{ subnet_id }}"
+#    region: "{{ region }}"
+#    ec2_url: "{{ ec2_url }}"
+#    assign_public_ip: yes
+#    key_name: "{{ key_name }}"

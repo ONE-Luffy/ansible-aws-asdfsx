@@ -33,10 +33,8 @@
 - name: deploy keys on all servers
   authorized_key: 
     user: root 
-    key: "{{ item[0] }}"
-  delegate_to: "{{ item[1] }}"
-  with_nested:
-    - "{{ ssh_keys.stdout }}"
+    key: "{{ hostvars[item].ssh_keys.stdout }}"
+  with_items:
     - "{{ groups['hadoop'] }}"
 
 - name: For each host, scan for its ssh public key
