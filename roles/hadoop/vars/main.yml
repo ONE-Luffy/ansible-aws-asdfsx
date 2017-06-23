@@ -1,0 +1,11 @@
+HADOOP_VERSION: 2.7.3
+HADOOP_URL: http://www.us.apache.org/dist/hadoop/common/hadoop-{{ HADOOP_VERSION }}/hadoop-{{ HADOOP_VERSION }}.tar.gz
+HADOOP_TAR: hadoop-{{ HADOOP_VERSION }}.tar.gz
+INSTALLATION_DIR: /usr/local
+HADOOP_DATA_DIR: /var/lib/hadoop
+HADOOP_LOG_DIR: /var/log/hadoop
+HADOOP_HOME: "{{ INSTALLATION_DIR }}/hadoop"
+
+# HADOOP service commands
+HADOOP_START_COMMAND: "{{ HADOOP_HOME }}/bin/zkServer.sh start"
+HADOOP_STOP_COMMAND: "{{ HADOOP_HOME }}/bin/zkServer.sh stop"

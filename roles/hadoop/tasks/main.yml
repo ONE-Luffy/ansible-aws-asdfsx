@@ -1,0 +1,59 @@
+- name: Check if hadoop is installed
+  stat:
+    path: "{{ HADOOP_HOME }}"
+  register: hadoop
+  tags: ['start', 'stop', 'install', 'uninstall', 'info']
+
+- name: Debug
+  debug: var=hadoop
+  tags: ['start', 'stop', 'install', 'uninstall', 'info', 'ssh']
+
+- name: Install hadoop
+  include: install.yml
+  tags: install
+  when: 
+    - hadoop.stat.exists == False
+    - acname == "install"
+
+- name: Config ssh
+  include: ssh.yml
+  tags: ssh
+  when: 
+    - acname == "ssh"
+
+- name: Configure hadoop
+  include: configure.yml
+  tags: ["install", "configure"]
+  when:
+    - hadoop.stat.exists == False
+    - acname in ["install", "configure"]
+
+- name: Fail play if hadoop is not installed
+  fail:
+    msg: "hadoop is not installed"
+  tags: ['start', 'stop', 'uninstall', 'info']
+  when: 
+    - hadoop.stat.exists == False
+    - acname in ['start', 'stop', 'uninstall', 'info']
+
+- name: Start hadoop
+  include: start.yml
+  tags: start
+  when: acname =="start"
+
+- name: Stop hadoop
+  include: stop.yml
+  tags: ['stop', 'uninstall']
+  when: acname in ['stop', 'uninstall']
+
+- name: Uninstall hadoop
+  include: uninstall.yml
+  tags: uninstall
+  when: 
+    - hadoop.stat.exists == True
+    - acname == "uninstall"
+
+- name: hadoop info
+  include: info.yml
+  tags: info
+  when: acname == "info"
