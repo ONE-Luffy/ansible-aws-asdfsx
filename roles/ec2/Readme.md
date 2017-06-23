@@ -6,4 +6,5 @@ $ ansible-playbook -i inventory ec2.yml -e "vars_file=./ec2_vars.yml" -e 'acname
 $ ansible-playbook -i inventory ec2.yml -e "vars_file=./ec2_vars.yml" -e 'acname=stop' --tags stop
 $ ansible-playbook -i inventory ec2.yml -e "vars_file=./ec2_vars.yml" -e 'acname=terminate' --tags terminate
 $ ansible-playbook -i inventory ec2.yml -e "vars_file=./ec2_vars.yml" -e 'acname=describe' --tags describe
+$ ansible-playbook -i inventory ec2.yml -e "vars_file=./ec2_vars.yml" -e 'acname=ssh' --tags ssh
 ```
