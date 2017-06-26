@@ -45,8 +45,3 @@
   include: ssh.yml
   when: acname == "ssh"
   tags: ['ssh']
-
-- name: install dependencies
-  include: dependencies.yml
-  when: acname == "dependencies"
-  tags: ['dependencies']

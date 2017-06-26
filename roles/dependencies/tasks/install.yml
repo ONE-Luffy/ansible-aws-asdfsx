@@ -1,4 +1,8 @@
 ---
+# for hawq
+- name: "install epel-release"
+  command: yum -y install epel-release
+
 - name: "install software"
   command: yum install -y man passwd sudo tar which git mlocate links make bzip2 net-tools \
                           autoconf automake libtool m4 gcc gcc-c++ gdb bison flex gperf maven indent \
@@ -13,12 +17,12 @@
 - name: "instal software"
   command: pip --retries=50 --timeout=300 install pycrypto
 
+# for hue
 - name: "install software"
   command: yum install -y ant gcc g++ krb5-devel libffi-devel mariadb-devel openssl-devel \
                           cyrus-sasl-devel cyrus-sasl-gssapi libsqlite3x-devel libtidy-devel \
                           libxml2-devel libxslt-devel make openldap-devel maven python-devel \
-                          python-setuptools gmp-devel cyrus-sasl-plain
-
+                          python-setuptools gmp-devel cyrus-sasl-plain mariadb-server
 
 # install scala
 - name: Download Scala tar
@@ -27,8 +31,8 @@
     dest: "{{ scala_install_dir }}"
     mode: 0644
 
-- name: "Ensure the scala dir exists at {{scala_dir}}"
-  file: path={{scala_dir}} state=directory
+- name: "Ensure the scala dir exists at {{scala_home}}"
+  file: path={{scala_home}} state=directory
 
 - name: Unpack tarball.
-  command: tar zxf {{scala_install_dir}}/scala-{{scala_version}}.tgz --strip-components=1 chdir={{scala_dir}} creates={{scala_dir}}/bin
+  command: tar zxf {{scala_install_dir}}/scala-{{scala_version}}.tgz --strip-components=1 chdir={{scala_home}} creates={{scala_home}}/bin
