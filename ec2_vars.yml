@@ -34,7 +34,8 @@ ec2_instances:
         Name: "{{ tag_key_vals.Name }}"
         class: hadoop
         class2: namenode
-    exact_count: 2
+        class3: resourcemanager
+    exact_count: 1
     count_tag: 
         Name: hadoop
     vpc_subnet_id: "{{ subnet_id }}"
@@ -49,7 +50,26 @@ ec2_instances:
     instance_tags: 
         Name: "{{ tag_key_vals.Name }}"
         class: hadoop
-        class2: datanode
+        class2: namenode
+        class3: datanode
+        class4: historyserver
+    exact_count: 1
+    count_tag: 
+        Name: hadoop
+    vpc_subnet_id: "{{ subnet_id }}"
+    region: "{{ region }}"
+    ec2_url: "{{ ec2_url }}"
+    assign_public_ip: yes
+    key_name: "{{ key_name }}"
+
+  - image: ami-0c2aba6c
+    instance_type: t2.medium
+    group: default,ssh_enable
+    instance_tags: 
+        Name: "{{ tag_key_vals.Name }}"
+        class: hadoop
+        class3: datanode
+        class5: journalnodes
     exact_count: 2
     count_tag: 
         Name: hadoop
