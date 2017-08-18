@@ -1,0 +1,36 @@
+- name: Install gcc lua
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - gcc
+    - lua-devel
+    - luajit-devel
+    - pcre-devel
+    - openssl-devel
+
+- name: download tengine
+  get_url:
+    url: "{{ TENGINE_URL }}"
+    dest: "{{ DOWNLOAD_DIR }}"
+    mode: 0644
+
+- name: Unpack tengine tar
+  shell: tar zxvf {{ DOWNLOAD_DIR }}/tengine.tar.gz
+
+- name: Build tengine
+  shell: ./configure --prefix=/usr/local/nginx --with-pcre --with-http_lua_module --with-luajit-lib=/usr/lib64/ --with-luajit-inc=/usr/include/luajit-2.0/ --with-lua-inc=/usr/include/luajit-2.0/ --with-lua-lib=/usr/lib64/ --with-ld-opt=-Wl,-rpath,/usr/lib64
+  args:
+    chdir: {{ BUILD_DIR }}
+
+- name: Build tengine
+  shell: make insatll
+  args:
+    chdir: {{ BUILD_DIR }}
+
+- name: install service
+  templates:
+    src: "{{ item }}"
+    dest:  /usr/lib/systemd/system/{{ item }}
+  with_items:
+    - tengine.service
