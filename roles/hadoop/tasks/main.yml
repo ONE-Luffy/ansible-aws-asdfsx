@@ -2,7 +2,7 @@
   stat:
     path: "{{ HADOOP_HOME }}"
   register: hadoop
-  tags: ['start', 'stop', 'install', 'uninstall', 'info']
+  tags: ['start', 'stop', 'install', 'uninstall', 'info', 'configure']
 
 - name: Debug
   debug: var=hadoop
@@ -23,10 +23,10 @@
 
 - name: Configure hadoop
   include: configure.yml
-  tags: ["install", "configure"]
+  tags: ["configure"]
   when:
-    - hadoop.stat.exists == False
-    - acname in ["install", "configure"]
+    - hadoop.stat.exists == True
+    - acname in ["configure"]
 
 - name: Fail play if hadoop is not installed
   fail:
@@ -36,24 +36,44 @@
     - hadoop.stat.exists == False
     - acname in ['start', 'stop', 'uninstall', 'info']
 
-- name: Start hadoop
-  include: start.yml
-  tags: start
-  when: acname =="start"
+- name: start or stop jounnalnodes
+  include: journalnodes.yml
+  tags: ['startjournal', 'stopjournal']
+  when:
+    - acname in ['startjournal', 'stopjournal']
+    - inventory_hostname == groups['journalnodes'][0]
 
-- name: Stop hadoop
-  include: stop.yml
-  tags: ['stop', 'uninstall']
-  when: acname in ['stop', 'uninstall']
+- name: format namenode
+  include: format_namenode.yml
+  tags: ['format_namenode']
+  when:
+    - acname in ['format_namenode']
+    - inventory_hostname == groups['namenodes'][0]
 
-- name: Uninstall hadoop
-  include: uninstall.yml
-  tags: uninstall
-  when: 
-    - hadoop.stat.exists == True
-    - acname == "uninstall"
+- name: format secondary
+  include: format_namenode_secondary.yml
+  tags: ['format_namenode']
+  when:
+    - acname in ['format_namenode']
+    - inventory_hostname == groups['namenodes'][1]
 
-- name: hadoop info
-  include: info.yml
-  tags: info
-  when: acname == "info"
+- name: start datanode
+  include: datanode.yml
+  tags: ['datanode']
+  when:
+    - acname in ['datanode']
+    - inventory_hostname in groups['datanode']
+
+- name: start or stop dfs
+  include: yarn.yml
+  tags: ['start_yarn', 'stop_yarn']
+  when:
+    - acname in ['start_yarn', 'stop_yarn']
+    - inventory_hostname == groups['namenodes'][0]
+
+- name: start or stop dfs
+  include: yarn.yml
+  tags: ['start_dfs', 'stop_dfs']
+  when:
+    - acname in ['start_dfs', 'stop_dfs']
+    - inventory_hostname == groups['namenodes'][0]
