@@ -36,3 +36,7 @@
 
 - name: Unpack tarball.
   command: tar zxf {{scala_install_dir}}/scala-{{scala_version}}.tgz --strip-components=1 chdir={{scala_home}} creates={{scala_home}}/bin
+
+- name: "install lzo"
+  command: yum install -y lzo-devel
+
