@@ -2,7 +2,7 @@
 - name: Creating host group nginx from dynamic inventory
   hosts: localhost
   connection: local
-  tags: ['start', 'stop', 'restart', 'enable', 'disable']
+  tags: ['start', 'stop', 'restart', 'enable', 'disable', 'install']
   vars:
     nginx_tag_name: "tag_{{ nginx_tag | replace('-', '_') }}"
   tasks:

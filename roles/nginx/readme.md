@@ -7,3 +7,8 @@ $ ansible-playbook -i contrib/ec2.py nginx.yml -e "nginx_tag=class_nginx" -e 'ac
 $ ansible-playbook -i contrib/ec2.py nginx.yml -e "nginx_tag=class_nginx" -e 'acname=stop' --tags enable
 $ ansible-playbook -i contrib/ec2.py nginx.yml -e "nginx_tag=class_nginx" -e 'acname=stop' --tags disable
 ```
+
+使用 kafka 的主机做测试
+```
+$ ansible-playbook -i contrib/ec2.py nginx.yml -e "nginx_tag=class_kafka" -e 'acname=install' --tags install
+```
