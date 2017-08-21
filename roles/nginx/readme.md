@@ -12,3 +12,11 @@ $ ansible-playbook -i contrib/ec2.py nginx.yml -e "nginx_tag=class_nginx" -e 'ac
 ```
 $ ansible-playbook -i contrib/ec2.py nginx.yml -e "nginx_tag=class_kafka" -e 'acname=install' --tags install
 ```
+
+使用 curl 发送 post 数据
+```
+curl -H "Content-Type: application/json" -d '{"object_kind":"merge_request"}' http://localhost/app
+```
+
+[openresty 最佳实践](https://moonbingbing.gitbooks.io/openresty-best-practices/ngx_lua/phase.html)
+[nginx 接收 post 请求](http://blog.csdn.net/yangguanghaozi/article/details/52367118)

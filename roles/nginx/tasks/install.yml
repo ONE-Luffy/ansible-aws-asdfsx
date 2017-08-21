@@ -14,6 +14,7 @@
     - pcre-devel
     - openssl-devel
     - wget
+    - cronolog
 
 - debug:
     var: TENGINE_URL
@@ -34,7 +35,7 @@
     chdir: "{{ DOWNLOAD_DIR }}"
 
 - name: Build tengine
-  shell: ./configure --prefix=/usr/local/nginx --with-pcre --with-http_lua_module --with-luajit-lib=/usr/lib64/ --with-luajit-inc=/usr/include/luajit-2.0/ --with-lua-inc=/usr/include/luajit-2.0/ --with-lua-lib=/usr/lib64/ --with-ld-opt=-Wl,-rpath,/usr/lib64
+  shell: ./configure --prefix={{ INSTALLATION_DIR }} --with-pcre --with-http_lua_module --with-luajit-lib=/usr/lib64/ --with-luajit-inc=/usr/include/luajit-2.0/ --with-lua-inc=/usr/include/luajit-2.0/ --with-lua-lib=/usr/lib64/ --with-ld-opt=-Wl,-rpath,/usr/lib64
   args:
     chdir: "{{ BUILD_DIR }}"
 

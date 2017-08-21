@@ -2,4 +2,4 @@ TENGINE_VERSION: 2.1.0
 TENGINE_URL: http://tengine.taobao.org/download/tengine.tar.gz
 BUILD_DIR: /root/tengine-{{ TENGINE_VERSION }}
 DOWNLOAD_DIR: /root
-INSTALLATION_DIR: /usr/local/tengine
+INSTALLATION_DIR: /usr/local/nginx

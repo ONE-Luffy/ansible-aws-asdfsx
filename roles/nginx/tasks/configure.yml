@@ -1,9 +1,6 @@
-- name: Configure kudu
-  template: 
+- name: install service
+  template:
     src: "{{ item }}"
-    dest: /etc/kudu/conf/{{ item }}
-    owner: root 
-    group: root 
-    mode: 0644
+    dest: "{{ INSTALLATION_DIR }}/conf"
   with_items:
-    - master.gflagfile
+    - nginx.conf
