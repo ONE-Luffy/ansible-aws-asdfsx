@@ -50,7 +50,7 @@ ec2_instances:
         class: kafka
     exact_count: 1
     count_tag: 
-        Name: database
+        Name: kafka
     vpc_subnet_id: "{{ subnet_id }}"
     region: "{{ region }}"
     ec2_url: "{{ ec2_url }}"

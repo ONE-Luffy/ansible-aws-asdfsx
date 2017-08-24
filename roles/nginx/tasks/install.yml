@@ -50,3 +50,10 @@
     dest:  /usr/lib/systemd/system/{{ item }}
   with_items:
     - tengine.service
+
+- name: Create nginx log directory
+  file:
+    path: "{{ NGINX_APP_LOG_DIR }}"
+    state: directory
+    owner: root
+    mode: 0777
