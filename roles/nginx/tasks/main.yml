@@ -36,3 +36,8 @@
   include: disable.yml
   when: acname == "disable"
   tags: ['disable']
+
+- name: Deploy producer
+  include: deploy.yml
+  when: acname == "deploy"
+  tags: ['deploy']

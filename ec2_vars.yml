@@ -11,20 +11,20 @@ tag_key_vals:
   class: hadoop
 
 ec2_instances:
-#   - image: ami-0c2aba6c
-#     instance_type: t2.nano
-#     group: default,ssh_enable,kudu_enable,vpc_subnet_internal_enable
-#     instance_tags: 
-#         Name: "{{ tag_key_vals.Name }}"
-#         class: kudu
-#     exact_count: 1
-#     count_tag: 
-#         Name: kudu
-#     vpc_subnet_id: "{{ subnet_id }}"
-#     region: "{{ region }}"
-#     ec2_url: "{{ ec2_url }}"
-#     assign_public_ip: yes
-#     key_name: "{{ key_name }}"
+  - image: ami-0c2aba6c
+    instance_type: t2.nano
+    group: default,ssh_enable,kudu_enable,vpc_subnet_internal_enable
+    instance_tags: 
+        Name: "{{ tag_key_vals.Name }}"
+        class: kudu
+    exact_count: 1
+    count_tag: 
+        Name: kudu
+    vpc_subnet_id: "{{ subnet_id }}"
+    region: "{{ region }}"
+    ec2_url: "{{ ec2_url }}"
+    assign_public_ip: yes
+    key_name: "{{ key_name }}"
 
 #   - image: ami-0c2aba6c
 #     instance_type: t2.nano
@@ -48,6 +48,7 @@ ec2_instances:
     instance_tags: 
         Name: "{{ tag_key_vals.Name }}"
         class: kafka
+        class2: nginx
     exact_count: 1
     count_tag: 
         Name: kafka
