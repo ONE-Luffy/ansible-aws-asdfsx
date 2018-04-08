@@ -726,6 +726,7 @@ class Ec2Inventory(object):
         # ElastiCache boto module doesn't provide a get_all_intances method,
         # that's why we need to call describe directly (it would be called by
         # the shorthand method anyway...)
+        print("=======1")
         try:
             conn = self.connect_to_aws(elasticache, region)
             if conn:
@@ -735,13 +736,13 @@ class Ec2Inventory(object):
 
         except boto.exception.BotoServerError as e:
             error = e.reason
-
+            print(e)
             if e.error_code == 'AuthFailure':
                 error = self.get_auth_error_message()
             if not e.reason == "Forbidden":
                 error = "Looks like AWS ElastiCache is down:\n%s" % e.message
             self.fail_with_error(error, 'getting ElastiCache clusters')
-
+        print("========2")
         try:
             # Boto also doesn't provide wrapper classes to CacheClusters or
             # CacheNodes. Because of that we can't make use of the get_list
@@ -762,6 +763,7 @@ class Ec2Inventory(object):
         # ElastiCache boto module doesn't provide a get_all_intances method,
         # that's why we need to call describe directly (it would be called by
         # the shorthand method anyway...)
+        print("-------------------")
         try:
             conn = self.connect_to_aws(elasticache, region)
             if conn:
@@ -769,7 +771,7 @@ class Ec2Inventory(object):
 
         except boto.exception.BotoServerError as e:
             error = e.reason
-
+            
             if e.error_code == 'AuthFailure':
                 error = self.get_auth_error_message()
             if not e.reason == "Forbidden":

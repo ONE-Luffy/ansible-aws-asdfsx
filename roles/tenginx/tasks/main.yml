@@ -2,11 +2,6 @@
 
 # roles/nginx/tasks/main.yml
 
-- name: Optimize
-  include: optimize.yml
-  when: acname == "optimize"
-  tags: ['optimize']
-
 - name: Install
   include: install.yml
   when: acname == "install"
